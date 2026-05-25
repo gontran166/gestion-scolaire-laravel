@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
             [\App\Http\Controllers\ClasseController::class, 'destroyMatiere'])
             ->name('classes.matieres.destroy');
 
-        Route::resource('eleves', EleveController::class);
+        Route::resource('eleves', EleveController::class)->parameters(['eleves'=>'eleve']);
 
         Route::get('/paiements/create', [PaiementController::class, 'create'])->name('paiements.create');
         Route::post('/paiements', [PaiementController::class, 'store'])->name('paiements.store');

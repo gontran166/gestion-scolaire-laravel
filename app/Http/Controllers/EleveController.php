@@ -9,6 +9,7 @@ use App\Models\Matiere;
 use App\Models\Note;
 use App\Models\Eleve;
 use App\Models\Paiement;
+use Illuminate\Support\Facades\Storage;
 
 class EleveController extends Controller
 {
