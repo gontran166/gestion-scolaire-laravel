@@ -10,9 +10,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnseignantController;
 
 // Authentification (accessible sans être connecté)
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/connexion', [AuthController::class, 'showLogin'])->name('connexion');
+Route::post('/connexion', [AuthController::class, 'connexion']);
+Route::post('/deconnexion', [AuthController::class, 'deconnexion'])->name('deconnexion')->middleware('auth');
 
 // Toutes les routes suivantes nécessitent d'être connecté
 Route::middleware('auth')->group(function () {
@@ -64,4 +64,4 @@ Route::middleware('auth')->group(function () {
 });
 
 // Redirection de la racine vers dashboard
-Route::get('/', fn() => redirect()->route('dashboard'));
+Route::get('/', fn() => redirect()->route('connexion'));

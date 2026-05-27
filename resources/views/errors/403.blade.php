@@ -14,7 +14,7 @@
 
         <p class="text-muted mt-2 mb-4">
             Vous n'avez pas les droits nécessaires pour accéder à cette page.<br>
-            Cette section est réservée aux gestionnaires de l'établissement.
+            Cette section est réservée aux directeur de l'école.
         </p>
 
         {{-- Lien de retour vers le dashboard --}}

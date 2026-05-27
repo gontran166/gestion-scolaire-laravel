@@ -61,14 +61,13 @@
 </head>
 <body>
 
-{{-- ===================== SIDEBAR ===================== --}}
+{{-- ===================== Menu ou barre de navigation ===================== --}}
 <nav id="sidebar" class="d-flex flex-column py-3">
 
-    {{-- En-tête de la sidebar : nom de l'école --}}
     <div class="px-3 mb-4">
         <div class="d-flex align-items-center gap-2 mb-1">
             <i class="bi bi-mortarboard-fill fs-4 text-warning"></i>
-            <span class="fw-bold fs-6">École Primaire</span>
+            <span class="fw-bold fs-6">École Primaire Boussougou Communale</span>
         </div>
         <div class="text-muted" style="font-size:0.75rem">Système de gestion</div>
     </div>
@@ -85,7 +84,6 @@
     {{-- Navigation principale --}}
     <ul class="nav flex-column flex-grow-1 px-1">
 
-        {{-- Lien dashboard : visible par tous --}}
         <li class="nav-item">
             <a href="{{ route('dashboard') }}"
                class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -141,8 +139,14 @@
 
         <li class="nav-item">
             <a href="{{ route('notes.index') }}"
-               class="nav-link {{ request()->routeIs('notes.*') ? 'active' : '' }}">
-                <i class="bi bi-journal-text me-2"></i> Notes
+            class="nav-link {{ request()->routeIs('notes.*') ? 'active' : '' }}">
+                @if(auth()->user()->isGestionnaire())
+                    {{-- Gestionnaire : icône œil pour signifier lecture seule --}}
+                    <i class="bi bi-eye me-2"></i> Consulter les notes
+                @else
+                    {{-- Enseignant : icône crayon pour signifier saisie --}}
+                    <i class="bi bi-pencil-square me-2"></i> Saisir les notes
+                @endif
             </a>
         </li>
         <li class="nav-item mb-1">
@@ -154,9 +158,9 @@
 
     </ul>
 
-    {{-- Bouton de déconnexion en bas de la sidebar --}}
+    {{-- Bouton de déconnexion --}}
     <div class="px-3 mt-auto pt-3" style="border-top:1px solid #2d4a7a">
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('deconnexion') }}">
             @csrf
             <button type="submit" class="btn btn-sm w-100 text-start nav-link">
                 <i class="bi bi-box-arrow-left me-2"></i> Déconnexion

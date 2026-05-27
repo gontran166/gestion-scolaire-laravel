@@ -12,15 +12,13 @@
 
 @section('content')
 
-{{-- Affichage en cartes plutôt qu'en tableau :
-     plus lisible pour les classes car on veut voir les stats d'un coup d'œil --}}
 <div class="row g-3">
 
     @forelse($classes as $classe)
     <div class="col-md-6 col-lg-4">
         <div class="card border-0 shadow-sm h-100">
 
-            {{-- En-tête de la carte : niveau et nom --}}
+            {{-- niveau et nom --}}
             <div class="card-header border-0 pt-3 d-flex justify-content-between align-items-start">
                 <div>
                     {{-- Badge de niveau coloré selon le cycle --}}
@@ -70,7 +68,6 @@
                 {{-- Enseignant responsable --}}
                 <div class="d-flex align-items-center gap-2 mb-3 text-muted small">
                     <i class="bi bi-person-badge"></i>
-                    {{-- ?-> (nullsafe operator) : évite une erreur si user_id est null --}}
                     {{ $classe->enseignant?->name ?? 'Aucun enseignant assigné' }}
                 </div>
 
@@ -80,7 +77,6 @@
                     <div class="col-6">
                         <div class="p-2 rounded-2 bg-light text-center">
                             <div class="fw-bold fs-5">{{ $classe->eleves_count }}</div>
-                            {{-- eleves_count est chargé via withCount('eleves') dans le controller --}}
                             <div class="text-muted" style="font-size:0.75rem">Élèves</div>
                         </div>
                     </div>
@@ -118,7 +114,6 @@
 
             </div>
 
-            {{-- Pied de carte : liens rapides --}}
             <div class="card-footer bg-white border-0 pb-3 d-flex gap-2">
                 <a href="{{ route('eleves.index', ['classe_id' => $classe->id]) }}"
                    class="btn btn-sm btn-outline-secondary flex-grow-1">

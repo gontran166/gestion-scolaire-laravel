@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 class ClasseController extends Controller
 {
     /**
-     * 1. Affiche la liste de toutes les classes (actives uniquement).
+     * Affiche la liste de toutes les classes.
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class ClasseController extends Controller
     }
 
     /**
-     * 2. Affiche le formulaire de création d'une classe.
+     * Affiche le formulaire de création d'une classe.
      */
     public function create()
     {
@@ -35,7 +35,7 @@ class ClasseController extends Controller
     }
 
     /**
-     * 3. Enregistre une nouvelle classe dans la base de données.
+     * Enregistre une nouvelle classe dans la base de données.
      */
     public function store(Request $request)
     {
@@ -56,7 +56,7 @@ class ClasseController extends Controller
     }
 
     /**
-     * 4. Affiche les détails d'une classe spécifique.
+     * Affiche les détails d'une classe spécifique.
      */
     public function show(Classe $classe)
     {
@@ -89,7 +89,7 @@ class ClasseController extends Controller
     }
 
     /**
-     * 5. Affiche le formulaire de modification d'une classe.
+     * Affiche le formulaire de modification d'une classe.
      */
     public function edit(Classe $classe)
     {
@@ -99,7 +99,7 @@ class ClasseController extends Controller
     }
 
     /**
-     * 6. Enregistre les modifications de la classe.
+     * Enregistre les modifications de la classe.
      */
     public function update(Request $request, Classe $classe)
     {
@@ -118,11 +118,12 @@ class ClasseController extends Controller
     }
 
     /**
-     * 7. Supprime logiquement (Soft Delete) la classe.
+     *  Suppression d'une classe(suppression logique).
      */
     public function destroy(Classe $classe)
     {
-        // Déclenche le Soft Delete (et la cascade sur les élèves si configurée dans le modèle)
+        // Déclenche la suppression logique et la suppression logique en cascade des
+        // des élèves et matières appartenant à la classe.
         $classe->delete();
 
         return redirect()->route('classes.index')

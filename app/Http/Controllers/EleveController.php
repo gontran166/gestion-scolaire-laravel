@@ -15,7 +15,7 @@ class EleveController extends Controller
 {
     public function index()
     {
-        // Chargement eager des classes pour éviter le problème N+1
+        // Chargement des élèves avec les informations de leurs classe.
         $eleves = Eleve::with('classe')->latest()->paginate(20);
         return view('eleves.index', compact('eleves'));
     }
@@ -38,7 +38,7 @@ class EleveController extends Controller
             'photo'             => ['nullable', 'image', 'max:2048'], // 2 Mo max
         ]);
 
-        // Gestion de l'upload de photo
+        // Gestion du chargement de la photo
         if ($request->hasFile('photo')) {
             $data['photo'] = $request->file('photo')->store('photos/eleves', 'public');
         }
@@ -49,12 +49,14 @@ class EleveController extends Controller
                          ->with('success', "L'élève a été inscrit avec succès.");
     }
 
+    
     public function edit(Eleve $eleve)
     {
         $classes = Classe::orderBy('niveau')->get();
         return view('eleves.edit', compact('eleve', 'classes'));
     }
 
+    // valider la modification d'un élève
     public function update(Request $request, Eleve $eleve)
     {
         $data = $request->validate([

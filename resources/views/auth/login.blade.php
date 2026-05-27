@@ -46,7 +46,7 @@
 
     {{-- Formulaire de connexion --}}
     {{-- method POST + @csrf : protection obligatoire contre les attaques CSRF --}}
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('connexion') }}">
         @csrf
 
         {{-- Champ email --}}
@@ -60,7 +60,6 @@
                     name="email"
                     class="form-control @error('email') is-invalid @enderror"
                     value="{{ old('email') }}"
-                    {{-- old('email') : repopule le champ si le formulaire a été resoumis --}}
                     placeholder="admin@ecole.bf"
                     required
                     autofocus

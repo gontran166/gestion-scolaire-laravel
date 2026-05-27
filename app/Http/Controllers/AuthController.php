@@ -8,14 +8,14 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
-        // Si déjà connecté, on redirige directement
+        // Si déjà connecté, on redirige directement vers le tableau de bord
         if (auth()->check()) {
             return redirect()->route('dashboard');
         }
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function connexion(Request $request)
     {
         $credentials = $request->validate([
             'email'    => ['required', 'email'],
@@ -32,11 +32,11 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    public function logout(Request $request)
+    public function deconnexion(Request $request)
     {
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login');
+        return redirect()->route('connexion');
     }
 }

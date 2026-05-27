@@ -23,11 +23,11 @@ class MoyenneService
             return null;
         }
 
-        $sommeNombrateur  = $notes->sum(fn($n) => $n->note * $n->matiere->coefficient);
-        $sommeDenominateur = $notes->sum(fn($n) => $n->matiere->coefficient);
+        $totalNote  = $notes->sum(fn($n) => $n->note * $n->matiere->coefficient);
+        $totalcoef = $notes->sum(fn($n) => $n->matiere->coefficient);
 
-        return $sommeDenominateur > 0
-            ? round($sommeNombrateur / $sommeDenominateur, 2)
+        return $totalcoef > 0
+            ? round($totalNote / $totalcoef, 2)
             : null;
     }
 

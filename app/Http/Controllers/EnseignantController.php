@@ -13,7 +13,7 @@ class EnseignantController extends Controller
     public function index()
     {
         // Chargement de tous les enseignants avec leurs classes associées
-        // withCount('classes') ajoute un attribut classes_count sur chaque user
+        // withCount('classes') ajoute un attribut classes_count sur chaque enseignant
         $enseignants = User::where('role', 'enseignant')
                            ->with('classes')
                            ->withCount('classes')
@@ -40,20 +40,17 @@ class EnseignantController extends Controller
         $data = $request->validate([
             'name'       => ['required', 'string', 'max:100'],
             'email'      => ['required', 'email', 'unique:users,email'],
-            // Password::defaults() : règle Laravel qui exige min 8 chars
             'password'   => ['required', 'confirmed', Password::defaults()],
             // classe_id est optionnel : on peut créer un enseignant sans classe
             'classe_id'  => ['nullable', 'exists:classes,id'],
         ]);
 
         // Création de l'enseignant avec le rôle forcé à 'enseignant'
-        // On ne laisse pas le formulaire décider du rôle pour éviter
-        // qu'un utilisateur malveillant se crée un compte gestionnaire
         $enseignant = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => Hash::make($data['password']),
-            'role'     => 'enseignant', // forcé, jamais depuis le formulaire
+            'role'     => 'enseignant', 
         ]);
 
         // Si une classe a été sélectionnée, on l'affecte immédiatement
@@ -81,16 +78,13 @@ class EnseignantController extends Controller
 
         $data = $request->validate([
             'name'      => ['required', 'string', 'max:100'],
-            // unique sauf pour cet utilisateur lui-même (ignore:users,id)
             'email'     => ['required', 'email', "unique:users,email,{$enseignant->id}"],
-            // Mot de passe optionnel à la modification : on ne change que s'il est fourni
             'password'  => ['nullable', 'confirmed', Password::defaults()],
         ]);
 
         $enseignant->update([
             'name'  => $data['name'],
             'email' => $data['email'],
-            // Si un nouveau mot de passe est fourni on le hash, sinon on garde l'ancien
             ...(!empty($data['password'])
                 ? ['password' => $data['password']]
                 : []),
@@ -117,7 +111,6 @@ class EnseignantController extends Controller
 
     /**
      * Affectation rapide d'une classe à un enseignant depuis la liste.
-     * Appelée via un formulaire Ajax-like dans la vue index.
      */
     public function affecterClasse(Request $request, User $enseignant)
     {

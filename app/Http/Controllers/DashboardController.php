@@ -16,6 +16,7 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
+        // gestion de l'affichage du tableau de bord du directeur (gestionnaire)
         if ($user->isGestionnaire()) {
             // Stats financières globales
             $stats = [
@@ -35,7 +36,7 @@ class DashboardController extends Controller
             return view('dashboard.gestionnaire', compact('stats'));
         }
 
-        // Vue enseignant : ses classes et leurs élèves
+        // gestion du tableau de bord d'un enseignant : ses classes et leurs élèves
         $classes = $user->classes()->with('eleves')->get();
         return view('dashboard.enseignant', compact('classes'));
     }

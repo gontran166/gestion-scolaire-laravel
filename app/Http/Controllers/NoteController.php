@@ -33,7 +33,6 @@ class NoteController extends Controller
             // pour pré-remplir la grille sans requête supplémentaire dans la vue
             $classeSelectionnee = Classe::with([
                 'matieres',
-                // Eager loading des élèves triés alphabétiquement
                 'eleves' => fn($q) => $q->orderBy('nom')->orderBy('prenom'),
                 // Pour chaque élève, on charge uniquement ses notes du trimestre/année sélectionnés
                 'eleves.notes' => fn($q) => $q
@@ -51,7 +50,12 @@ class NoteController extends Controller
             }
         }
 
-        return view('notes.index', compact('classes', 'classeSelectionnee'));
+        // On passe une variable $peutSaisir à la vue
+        // true  → l'utilisateur voit la grille de saisie (champs éditables)
+        // false → l'utilisateur voit la grille en lecture seule
+        $peutSaisir = $user->isEnseignant();
+
+        return view('notes.index', compact('classes', 'classeSelectionnee','peutSaisir'));
     }
 
     public function store(Request $request)
@@ -65,8 +69,6 @@ class NoteController extends Controller
         ]);
 
         // updateOrCreate : met à jour si la note existe déjà, sinon crée
-        // Clé de recherche : les 4 premiers champs (unicité définie dans la migration)
-        // Valeur à mettre à jour : uniquement 'note'
         Note::updateOrCreate(
             [
                 'eleve_id'       => $data['eleve_id'],

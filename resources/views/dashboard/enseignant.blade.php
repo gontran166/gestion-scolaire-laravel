@@ -129,7 +129,7 @@
     <div class="text-muted">
         <i class="bi bi-building fs-1 d-block mb-2 opacity-25"></i>
         <p>Aucune classe ne vous est encore assignée.</p>
-        <p class="small">Contactez le gestionnaire de l'établissement.</p>
+        <p class="small">Contactez le directeur de l'établissement.</p>
     </div>
 </div>
 @endforelse

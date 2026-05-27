@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/ProfilController.php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -12,7 +10,6 @@ class ProfilController extends Controller
 {
     public function showChangePassword()
     {
-        // Pas besoin de passer de données : auth()->user() est disponible partout
         return view('profil.password');
     }
 
@@ -28,8 +25,7 @@ class ProfilController extends Controller
         if (!Hash::check($request->current_password, auth()->user()->password)) {
             return back()->withErrors([
                 'current_password' => 'Le mot de passe actuel est incorrect.',
-            ])->withInput();
-            // withInput() : conserve les autres champs remplis sauf les mots de passe
+            ])->withInput();    //conserve les autres champs remplis sauf les mots de passe
         }
 
         // Mise à jour avec le nouveau mot de passe hashé
