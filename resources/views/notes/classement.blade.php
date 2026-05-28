@@ -30,7 +30,7 @@
                 <tr>
                     <th class="text-center" style="width:80px">Rang</th>
                     <th>Élève</th>
-                    <th class="text-center">Moyenne /20</th>
+                    <th class="text-center">Moyenne /10</th>
                     <th>Appréciation</th>
                 </tr>
             </thead>
@@ -57,7 +57,7 @@
                     {{-- Moyenne mise en forme et colorée --}}
                     <td class="text-center">
                         @if($item['moyenne'] !== null)
-                            <span class="badge fs-6 bg-{{ $item['moyenne'] >= 16 ? 'success' : ($item['moyenne'] >= 10 ? 'primary' : 'danger') }}">
+                            <span class="badge fs-6 bg-{{ $item['moyenne'] >= 8 ? 'success' : ($item['moyenne'] >= 5 ? 'primary' : 'danger') }}">
                                 {{ number_format($item['moyenne'], 2) }}
                             </span>
                         @else
@@ -71,11 +71,11 @@
                             @php
                                 $moy = $item['moyenne'];
                                 $appreciation = match(true) {
-                                    $moy >= 18 => ['Excellent',     'success'],
-                                    $moy >= 16 => ['Très bien',     'success'],
-                                    $moy >= 14 => ['Bien',          'primary'],
-                                    $moy >= 12 => ['Assez bien',    'info'],
-                                    $moy >= 10 => ['Passable',      'warning'],
+                                    $moy >= 9 => ['Excellent',     'success'],
+                                    $moy >= 8 => ['Très bien',     'success'],
+                                    $moy >= 7 => ['Bien',          'primary'],
+                                    $moy >= 6 => ['Assez bien',    'info'],
+                                    $moy >= 5 => ['Passable',      'warning'],
                                     default    => ['Insuffisant',   'danger'],
                                 };
                             @endphp

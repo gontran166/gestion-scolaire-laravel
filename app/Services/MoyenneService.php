@@ -23,7 +23,7 @@ class MoyenneService
             return null;
         }
 
-        $totalNote  = $notes->sum(fn($n) => $n->note * $n->matiere->coefficient);
+        $totalNote  = $notes->sum(fn($n) => $n->note);
         $totalcoef = $notes->sum(fn($n) => $n->matiere->coefficient);
 
         return $totalcoef > 0

@@ -291,7 +291,7 @@
                     'bg-success', 'bg-danger',
                     'bg-opacity-10', 'text-success', 'text-danger'
                 );
-                if (val >= 10) {
+                if (val >= (max / 2)) {
                     input.classList.add('bg-success', 'bg-opacity-10', 'text-success');
                 } else {
                     input.classList.add('bg-danger', 'bg-opacity-10', 'text-danger');
