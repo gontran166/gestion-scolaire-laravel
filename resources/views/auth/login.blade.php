@@ -31,9 +31,31 @@
 
     {{-- Logo et titre --}}
     <div class="text-center mb-4">
-        <i class="bi bi-mortarboard-fill text-warning" style="font-size:3rem"></i>
-        <h4 class="mt-2 fw-bold">Gestion Scolaire</h4>
-        <p class="text-muted small">Cycle Primaire — Connectez-vous</p>
+        @php
+            $roleUrl = request('role');
+        @endphp
+
+        <h4 class="mt-2 fw-bold">
+            @if($roleUrl === 'gestionnaire')
+                Espace Directeur
+            @elseif($roleUrl === 'enseignant')
+                Espace Enseignant
+            @else
+                Connexion
+            @endif
+        </h4>
+        <p class="text-muted small">
+            @if($roleUrl === 'gestionnaire')
+                <i class="bi bi-person-badge me-1 text-warning"></i>
+                Gestion administrative et financière
+            @elseif($roleUrl === 'enseignant')
+                <i class="bi bi-person-workspace me-1 text-success"></i>
+                Suivi pédagogique et saisie des notes
+            @else
+                École Primaire Boussougou Communale
+            @endif
+        </p>
+
     </div>
 
     {{-- Affichage de l'erreur de validation globale (email incorrect) --}}
@@ -102,6 +124,10 @@
             <i class="bi bi-box-arrow-in-right me-2"></i> Se connecter
         </button>
     </form>
+    <a href="{{ route('accueil') }}"
+        class="d-inline-flex align-items-center gap-1 text-muted small text-decoration-none mb-3">
+            <i class="bi bi-arrow-left"></i> Retour à l'accueil
+    </a>
 
 </div>
 

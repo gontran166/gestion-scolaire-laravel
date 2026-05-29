@@ -8,6 +8,7 @@ use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnseignantController;
+use App\Http\Controllers\AccueilController;
 
 // Authentification (accessible sans être connecté)
 Route::get('/connexion', [AuthController::class, 'showLogin'])->name('connexion');
@@ -64,4 +65,4 @@ Route::middleware('auth')->group(function () {
 });
 
 // Redirection de la racine vers dashboard
-Route::get('/', fn() => redirect()->route('connexion'));
+Route::get('/', [AccueilController::class, 'index'])->name('accueil');
