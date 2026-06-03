@@ -40,14 +40,15 @@ class DatabaseSeeder extends Seeder
         $cm1 = Classe::create([
             'nom'             => 'CM1 A',
             'niveau'          => 'CM1',
-            'frais_scolarite' => 45000,
+            'frais_scolarite' => 20000,
             'annee_scolaire'  => '2025-2026',
             'user_id'         => $enseignant->id,
         ]);
 
         // Matières du CM1
-        $maths = Matiere::create(['nom' => 'Mathématiques', 'coefficient' => 3, 'classe_id' => $cm1->id]);
-        $francais = Matiere::create(['nom' => 'Français',       'coefficient' => 3, 'classe_id' => $cm1->id]);
+        $operation = Matiere::create(['nom' => 'Opération', 'coefficient' => 2, 'classe_id' => $cm1->id]);
+        $probleme = Matiere::create(['nom' => 'Problème', 'coefficient' => 2, 'classe_id' => $cm1->id]);
+        $francais = Matiere::create(['nom' => 'Etude de texte',       'coefficient' => 2, 'classe_id' => $cm1->id]);
         Matiere::create(['nom' => 'Sciences',        'coefficient' => 2, 'classe_id' => $cm1->id]);
         Matiere::create(['nom' => 'Histoire-Géo',    'coefficient' => 2, 'classe_id' => $cm1->id]);
         Matiere::create(['nom' => 'Sport',            'coefficient' => 1, 'classe_id' => $cm1->id]);
@@ -62,14 +63,14 @@ class DatabaseSeeder extends Seeder
         // Un paiement de test
         Paiement::create([
             'eleve_id'      => $eleve1->id,
-            'montant'       => 20000,
+            'montant'       => 15000,
             'date_paiement' => now()->toDateString(),
         ]);
 
         // Une note de test
         Note::create([
             'eleve_id'       => $eleve1->id,
-            'matiere_id'     => $maths->id,
+            'matiere_id'     => $operation->id,
             'note'           => 15.50,
             'trimestre'      => 1,
             'annee_scolaire' => '2025-2026',
