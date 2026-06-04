@@ -2,10 +2,20 @@
 @extends('layouts.app')
 
 @section('title', 'Élèves')
-@section('page-title', 'Gestion des élèves')
+@section('page-title',
+    $classeSelectionnee
+        ? 'Élèves — ' . $classeSelectionnee->nom
+        : 'Gestion des élèves'
+)
 
 {{-- Bouton "Inscrire un élève" dans l'en-tête de page --}}
 @section('page-action')
+    @if($classeSelectionnee)
+        {{-- Bouton pour revenir à la liste complète --}}
+        <a href="{{ route('eleves.index') }}" class="btn btn-outline-secondary me-2">
+            <i class="bi bi-x-circle me-1"></i> Tous les élèves
+        </a>
+    @endif
     <a href="{{ route('eleves.create') }}" class="btn btn-primary">
         <i class="bi bi-person-plus me-1"></i> Inscrire un élève
     </a>
@@ -17,6 +27,10 @@
 <div class="card border-0 shadow-sm mb-3">
     <div class="card-body py-2">
         <form method="GET" action="{{ route('eleves.index') }}" class="d-flex gap-2">
+            {{-- Préserve le filtre classe_id quand on fait une recherche par nom --}}
+            @if($classeSelectionnee)
+                <input type="hidden" name="classe_id" value="{{ $classeSelectionnee->id }}">
+            @endif
             <input
                 type="text"
                 name="search"
@@ -30,7 +44,8 @@
             </button>
             {{-- Bouton reset : efface la recherche --}}
             @if(request('search'))
-                <a href="{{ route('eleves.index') }}" class="btn btn-outline-danger">
+                <a href="{{ route('eleves.index', $classeSelectionnee ? ['classe_id' => $classeSelectionnee->id] : []) }}"
+                class="btn btn-outline-danger">
                     <i class="bi bi-x"></i>
                 </a>
             @endif

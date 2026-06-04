@@ -15,9 +15,26 @@ class EleveController extends Controller
 {
     public function index()
     {
-        // Chargement des élèves avec les informations de leurs classe.
-        $eleves = Eleve::with('classe')->latest()->paginate(20);
-        return view('eleves.index', compact('eleves'));
+        $classeId = request('classe_id');
+        $search   = request('search');
+
+        $eleves = Eleve::with('classe')
+            ->when($classeId, fn($q) => $q->where('classe_id', $classeId))
+            ->when($search, fn($q) => $q->where(function($q) use ($search) {
+                // Recherche dans nom OU prénom
+                $q->where('nom',    'like', "%{$search}%")
+                ->orWhere('prenom', 'like', "%{$search}%");
+            }))
+            ->latest()
+            ->paginate(20)
+            ->withQueryString();
+            // withQueryString() : conserve classe_id et search dans les liens de pagination
+
+        $classeSelectionnee = $classeId
+            ?Classe::find($classeId)
+            : null;
+
+        return view('eleves.index', compact('eleves', 'classeSelectionnee'));
     }
 
     public function create()
